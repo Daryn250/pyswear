@@ -107,7 +107,7 @@ def cleanAsciiArt(message, debug=False):
     # and replacing them with actual characters
 
     ascii_counterparts = {
-        "k":["l<", "]<"],
+        "k":["l<", "]<", "|<", "[<", "I<"],
         "h":["|~|", "|-|", "]-[", "]~["],
         "o":["[]", "()"],
         "n":["||", r"|\|", r"]\["],
