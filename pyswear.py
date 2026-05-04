@@ -81,6 +81,7 @@ def messageProfanity(message, debug=False, profanity_percent = 0.85):
                             continue
 
                         else: 
+                            
                             num_right-=0.5 + (curr_index/(85*len(swear))) # may be incorrect!
                             if debug:
                                 print(f"Letter {formatted_message[curr_index+i]} probably not part of swear")
@@ -114,6 +115,12 @@ def cleanAsciiArt(message, debug=False):
         "a":["/\\"],
         "i":["|", "][", ";"]
     }
+    formatted_message = "" # remove spaces
+    for all in message:
+        if (all!=" "):
+            formatted_message+=all
+
+    message = formatted_message 
 
     message_mods = [] # should contain an index and then a copy of the character to replace
 
@@ -133,20 +140,22 @@ def cleanAsciiArt(message, debug=False):
         print(message_mods)
 
 
-    string_shrink_amt = 0
+
     for mod in message_mods:
-        position = mod[0] - string_shrink_amt
+        position = mod[0]
         ascii_char = mod[1]
         replacement_char = mod[2]
-
-        if position-string_shrink_amt >= len(message):
-            continue
+        
 
         if message[position] != ascii_char[0]:
-            continue
+            break # already fixed all ascii characters.
         
         message = message[0:position:] + replacement_char + message[position+len(ascii_char):len(message):]
-        string_shrink_amt+=len(ascii_char)-1
+        
+        # loop through and update all mods for future positions
+        for mod2 in message_mods:
+            if position<mod2[0]:
+                mod2[0]-=len(ascii_char)-1
 
     if debug:
         print(message)
